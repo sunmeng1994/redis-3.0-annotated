@@ -1,4 +1,4 @@
-/* zmalloc - total amount of allocated memory aware version of malloc()
+﻿/* zmalloc - total amount of allocated memory aware version of malloc()
  *
  * Copyright (c) 2009-2010, Salvatore Sanfilippo <antirez at gmail dot com>
  * All rights reserved.
@@ -67,6 +67,7 @@ void zlibc_free(void *ptr) {
 #define free(ptr) je_free(ptr)
 #endif
 
+//__sync_sub_and_fetch(&used_memory, (__n)) 无锁化编程
 #ifdef HAVE_ATOMIC
 #define update_zmalloc_stat_add(__n) __sync_add_and_fetch(&used_memory, (__n))
 #define update_zmalloc_stat_sub(__n) __sync_sub_and_fetch(&used_memory, (__n))
@@ -207,6 +208,7 @@ void zfree(void *ptr) {
 #endif
 }
 
+//字符串复制函数1
 char *zstrdup(const char *s) {
     size_t l = strlen(s)+1;
     char *p = zmalloc(l);
